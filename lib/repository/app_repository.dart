@@ -16,7 +16,7 @@ class AppRepository {
       AppModel(
         name: "Sword And Shield (MLS)",
         image: AppImages.icSas,
-        linkPlayStore: "https://play.google.com/store/apps/details?id=com.mls.sas.SwordAndShield&pli=1",
+        linkPlayStore: "https://play.google.com/store/apps/details?id=com.mls.sas",
         linkAppStore: "https://apps.apple.com/us/app/sword-and-shield-mls/id6738675435",
         downloadCount: 0,
       ),
