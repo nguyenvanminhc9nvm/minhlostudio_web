@@ -11,4 +11,5 @@ class AppImages {
   static const icTiktok = "assets/images/icon_tiktok.png";
   static const icUe5 = "assets/images/ic_ue5.png";
   static const icFlutter = "assets/images/ic_flutter.png";
+  static const icTowerStack3D = "assets/images/icon.png";
 }

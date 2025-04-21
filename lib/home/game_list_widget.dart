@@ -30,14 +30,24 @@ class _GameListWidgetState extends State<GameListWidget> {
       itemBuilder: (context, index) {
         return Padding(
           padding: EdgeInsets.only(bottom: 20.sp),
-          child: _buildItemGameMobile(listApp[index], 150.sp),
+          child: _buildItemGameMobile(
+            listApp[index],
+            150.sp,
+            listApp[index].linkTerm,
+            listApp[index].linkPrivacy,
+          ),
         );
       },
       itemCount: listApp.length,
     );
   }
 
-  Widget _buildItemGameMobile(AppModel appModel, double height) {
+  Widget _buildItemGameMobile(
+    AppModel appModel,
+    double height,
+    String pathTermName,
+    String pathPolicyName,
+  ) {
     return Container(
       height: height,
       decoration: BoxDecoration(
@@ -51,76 +61,107 @@ class _GameListWidgetState extends State<GameListWidget> {
         ],
         borderRadius: BorderRadius.circular(5.sp),
       ),
-      padding: EdgeInsets.all(5.sp),
+      padding: const EdgeInsets.all(10),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
+          SizedBox(
+            width: 100,
+            height: 100,
             child: Image.asset(
               appModel.image,
             ),
           ),
+          const SizedBox(
+            width: 10,
+          ),
+          Text(
+            appModel.name,
+            style: AppTextStyle.t20w700(),
+          ),
           Expanded(
-            flex: 2,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.sp),
+            child: Align(
+              alignment: Alignment.centerRight,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    appModel.name,
-                    style: AppTextStyle.t20w700(),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                          onPressed: () async {
+                            Navigator.of(context).pushNamed(pathTermName);
+                          },
+                          child: Text(
+                            context.l10n?.term_of_service ?? '',
+                            style: AppTextStyle.t20w700(Colors.cyan),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: TextButton(
+                          onPressed: () async {
+                            Navigator.of(context).pushNamed(pathPolicyName);
+                          },
+                          child: Text(
+                            context.l10n?.privacy_policy ?? "",
+                            style: AppTextStyle.t20w700(Colors.cyan),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    "${context.l10n?.download_count}: ${appModel.downloadCount}",
-                    style: AppTextStyle.t15w700(),
+                  const SizedBox(height: 30,),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextButton.icon(
+                          icon: Image.asset(
+                            AppImages.icPlayStore,
+                            width: 50.sp,
+                            height: 50.sp,
+                          ),
+                          onPressed: () async {
+                            if (appModel.linkPlayStore.isEmpty) {
+                              return;
+                            }
+                            if (await canLaunchUrl(
+                                Uri.parse(appModel.linkPlayStore))) {
+                              await launchUrl(Uri.parse(appModel.linkPlayStore));
+                            }
+                          },
+                          label: Text(
+                            context.l10n?.get ?? "",
+                            style: AppTextStyle.t20w700(),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: TextButton.icon(
+                          icon: Image.asset(
+                            AppImages.icAppStore,
+                            width: 50.sp,
+                            height: 50.sp,
+                          ),
+                          onPressed: () async {
+                            if (appModel.linkAppStore.isEmpty) {
+                              return;
+                            }
+                            if (await canLaunchUrl(
+                                Uri.parse(appModel.linkAppStore))) {
+                              await launchUrl(Uri.parse(appModel.linkAppStore));
+                            }
+                          },
+                          label: Text(
+                            context.l10n?.get ?? "",
+                            style: AppTextStyle.t20w700(),
+                          ),
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),
             ),
-          ),
-          TextButton.icon(
-            icon: Image.asset(
-              AppImages.icPlayStore,
-              width: 50.sp,
-              height: 50.sp,
-            ),
-            onPressed: () async {
-              if (appModel.linkPlayStore.isEmpty) {
-                return;
-              }
-              if (await canLaunchUrl(
-                  Uri.parse(appModel.linkPlayStore))) {
-                await launchUrl(Uri.parse(appModel.linkPlayStore));
-              }
-            },
-            label: Text(
-              context.l10n?.get ?? "",
-              style: AppTextStyle.t20w700(),
-            ),
-          ),
-          TextButton.icon(
-            icon: Image.asset(
-              AppImages.icAppStore,
-              width: 50.sp,
-              height: 50.sp,
-            ),
-            onPressed: () async {
-              if (appModel.linkAppStore.isEmpty) {
-                return;
-              }
-              if (await canLaunchUrl(
-                  Uri.parse(appModel.linkAppStore))) {
-                await launchUrl(Uri.parse(appModel.linkAppStore));
-              }
-            },
-            label: Text(
-              context.l10n?.get ?? "",
-              style: AppTextStyle.t20w700(),
-            ),
-          ),
+          )
         ],
       ),
     );

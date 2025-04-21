@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:minhlostudio_web/home/engine_list.dart';
 import 'package:minhlostudio_web/home/game_list_widget.dart';
 import 'package:minhlostudio_web/home/social_media_widget.dart';
-import 'package:minhlostudio_web/home/term_of_services.dart';
+import 'package:minhlostudio_web/home/privacy_term_sas/term_of_services.dart';
 import 'package:minhlostudio_web/l10n/l10n.dart';
 import 'package:minhlostudio_web/repository/app_repository.dart';
 import 'package:minhlostudio_web/utils/responsive_widget.dart';
@@ -65,14 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
           style: AppTextStyle.t50w400(Colors.white),
         ),
         SizedBox(height: 20.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buildNavButton(context, "Privacy Policy", PrivacyPolicyScreen.routeName),
-            SizedBox(width: 20.w),
-            _buildNavButton(context, "Terms of Service", TermsOfServiceScreen.routeName),
-          ],
-        ),
         _sectionHeader(language.about_me),
         Text(language.about_me_desc, style: AppTextStyle.t20w700(Colors.white)),
         _sectionHeader(language.game_list),

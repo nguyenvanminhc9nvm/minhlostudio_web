@@ -3,14 +3,16 @@ class AppModel {
   final String image;
   final String linkPlayStore;
   final String linkAppStore;
-  final int downloadCount;
+  final String linkPrivacy;
+  final String linkTerm;
 
   AppModel({
     required this.name,
     required this.image,
     required this.linkPlayStore,
     required this.linkAppStore,
-    required this.downloadCount,
+    required this.linkPrivacy,
+    required this.linkTerm,
   });
 }
 
